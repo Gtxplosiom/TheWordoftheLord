@@ -1,0 +1,56 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+Debug/
+Release/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+
+# Logs
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+
+# DotNet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Publish outputs
+*.PublishSettings
+.publish/
+publish/
+wwwroot/
+
+# User-specific files
+*.userosscache
+*.userprefs
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*~ 
