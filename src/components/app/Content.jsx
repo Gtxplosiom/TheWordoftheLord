@@ -1,7 +1,8 @@
 import { useContext } from 'react';
-import { PageContext } from '../contexts/PageContext';
-import { ReadPage, HomePage, AboutPage } from './Pages';
-import '../assets/Global.css'
+import { PageContext } from '../../contexts/PageContext';
+import ReadPage from '../../pages/ReadPage';
+import HomePage from '../../pages/HomePage';
+import AboutPage from '../../pages/AboutPage';
 
 const Content = () => {
     const {currTab} = useContext(PageContext);

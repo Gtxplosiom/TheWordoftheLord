@@ -1,0 +1,9 @@
+.book-selector-container { grid-area: book-selector; }
+.reader-container { grid-area: reader; }
+.tool-selector-container { grid-area: tool-selector; }
+
+.read-page-container {
+    display: grid;
+    grid-template:
+        'book-selector reader tool-selector';
+}
