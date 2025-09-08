@@ -1,9 +1,35 @@
-.book-selector-container { grid-area: book-selector; }
-.reader-container { grid-area: reader; }
-.tool-selector-container { grid-area: tool-selector; }
-
 .read-page-container {
     display: grid;
-    grid-template:
-        'book-selector reader tool-selector';
+    grid-template-columns: 25% 50% 25%;
+    grid-template-areas: 'book-selector reader tool-selector';
+    width: 100vw;
+}
+
+.book-selector-container {
+    grid-area: book-selector;
+    width: 100%;
+}
+
+.reader-container {
+    grid-area: reader;
+    width: 100%;
+}
+
+.tool-selector-container {
+    grid-area: tool-selector;
+    width: 100%;
+}
+
+.book-selector-container .book-container .visible-book {
+    height: 50px;
+    align-content: center;
+}
+
+.book-selector-container .book-container .visible-book:hover {
+    cursor: pointer;
+}
+
+.book-selector-container .book-container div#focused {
+    font-size: 30px;
+    font-weight: bold;
 }

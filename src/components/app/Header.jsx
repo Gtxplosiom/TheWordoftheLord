@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { PageContext } from '../../contexts/PageContext';
-import '../../assets/Global.css'
 import '../../assets/Header.css'
 
 const Header = () => {

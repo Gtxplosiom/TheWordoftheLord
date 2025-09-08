@@ -1,7 +1,8 @@
-const Reader = () => {
+const Reader = ({bookName}) => {
     return (
         <div className="reader-container">
-            <p>Reader here</p>
+            <h2>Book of {bookName}</h2>
+            <p>Text here</p>
         </div>
     )
 }
