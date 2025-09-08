@@ -11,7 +11,7 @@ const ReadPage = () => {
     const [currBook, setCurrBook] = useState(0);
 
     useEffect(() => {
-        axios.get("https://localhost:7048/api/Bible/books")
+        axios.get("https://localhost:7048/api/Bible/booklist")
         .then(res => setBooks(res.data))
         .catch(err => console.error(err));
     }, []);
