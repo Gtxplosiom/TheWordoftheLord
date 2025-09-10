@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using backend.Models;
-using System.Runtime.CompilerServices;
+﻿using backend.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
@@ -9,32 +7,47 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     public class BibleController : ControllerBase
     {
-        private readonly Bible _bible;
+        private readonly BibleContainer _bibleContainer;
 
-        public BibleController()
+        public BibleController(BibleContainer bibleContainer)
         {
-            var json = System.IO.File.ReadAllText("Data/Bible/DRC.json");
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            _bible = JsonSerializer.Deserialize<Bible>(json, options) ?? new();
+            _bibleContainer = bibleContainer;
         }
 
         [HttpGet("booklist")]
         public IActionResult GetBookList()
         {
-            var result = _bible.Books.Select(b => b.Name).ToList();
+            var result = _bibleContainer.Typed.Books.Select(b => b.Name).ToList();
             return Ok(result);
         }
 
         [HttpGet("{bookName}")]
         public IActionResult GetBookContent(string bookName)
         {
-            var result = _bible.Books.FirstOrDefault(b => b.Name.Equals(bookName, StringComparison.OrdinalIgnoreCase));
+            var result = _bibleContainer.Typed.Books.FirstOrDefault(b => b.Name.Equals(bookName, StringComparison.OrdinalIgnoreCase));
+            return Ok(result);
+        }
+
+        // implement semantic searching
+        [HttpGet("query/{queryString}")]
+        public IActionResult BibleQuery(string queryString)
+        {
+            var result = _bibleContainer.Flat
+                .Where(verse => verse.Text.Contains(queryString, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            return Ok(result);
+        }
+
+        [HttpGet("query/book/{queryString}")]
+        public IActionResult BibleBookQuery(string queryString)
+        {
+            var result = _bibleContainer.Flat
+                .Where(verse => verse.Book.Contains(queryString, StringComparison.OrdinalIgnoreCase))
+                .ToList();
             return Ok(result);
         }
     }
 }
+
+// TODO: verify bible files for error
+// because right now psalms doesn't align
