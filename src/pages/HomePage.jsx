@@ -1,8 +1,8 @@
-import VOTD from '../components/home-page/VOTD'
+import FavoriteVerse from '../components/home-page/FavoriteVerse'
 
 const HomePage = () => {
     return (
-        <VOTD />
+        <FavoriteVerse />
     )
 }
 
