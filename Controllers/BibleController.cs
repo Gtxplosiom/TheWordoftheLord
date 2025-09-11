@@ -38,11 +38,25 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("query/{currBook}/{queryString}")]
+        public IActionResult BibleSingleQuery(string currBook, string queryString)
+        {
+            var result = _bibleContainer.Flat
+                .Where(bible =>
+                    bible.Book.Equals(currBook, StringComparison.OrdinalIgnoreCase) &&
+                    bible.Text.Contains(queryString, StringComparison.OrdinalIgnoreCase)
+                )
+                .ToList();
+
+            return Ok(result);
+        }
+
+
         [HttpGet("query/book/{queryString}")]
         public IActionResult BibleBookQuery(string queryString)
         {
             var result = _bibleContainer.Flat
-                .Where(verse => verse.Book.Contains(queryString, StringComparison.OrdinalIgnoreCase))
+                .Where(bible => bible.Book.Contains(queryString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             return Ok(result);
         }
