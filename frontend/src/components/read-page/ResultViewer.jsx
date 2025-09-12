@@ -2,11 +2,11 @@ const ResultViewer = ({result}) => {
     return (
         <div className="query-result-container">
             <div className="result-title-container">
-                <h3>Showing {result.length} results</h3>
+                <h3>{result.length > 0 ? `Showing ${result.length} ${result.length > 1 ? 'results' : 'result'}` : 'Not found' }</h3>
             </div>
             {result.map((results, idx) => (
                 <div className="result-container" key={idx}>
-                    <p>Chapter {results.chapter} - Verse {results.verse} - {results.text}</p>
+                    <p><span style={{fontWeight: 'bold'}}>{results.chapter}:{results.verse}</span> - {results.text}</p>
                 </div>
             ))}
         </div>

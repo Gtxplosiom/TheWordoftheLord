@@ -1,10 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { FixedSizeList as List } from "react-window";
 import { ResultLoading } from "../read-page/Loading";
 
 const ResultAll = ({currQuery}) => {
     const [queryResult, setQueryResult] = useState([]);
     const [resultLoading, setResultLoading] = useState(false);
+    const containerRef = useRef(null)
+    const [containerHeight, setContainerHeight] = useState(0);
+
+    useEffect(() => {
+        const updateContainerHeight = () => {
+            if (containerRef.current) {
+                setContainerHeight(containerRef.current.getBoundingClientRect().height);
+            }
+        }
+
+        updateContainerHeight();
+
+        window.addEventListener('resize', updateContainerHeight);
+
+        return () => {
+          window.removeEventListener('resize', updateContainerHeight);
+        };
+
+    }, []);
 
     useEffect(() => {
         const fetchQuery = async () => {
@@ -25,8 +45,25 @@ const ResultAll = ({currQuery}) => {
             }
         };
 
+        // debouncer (optional/reconsider)
+        // const handler = setTimeout(fetchQuery, 300);
+        // return () => clearTimeout(handler);
+
         fetchQuery();
     }, [currQuery]);
+
+    const Verse = ({index, style}) => {
+        const verse = queryResult[index];
+        return (
+            <div style={style} className="result-container">
+                <p>
+                    <span>
+                        {verse.book} {verse.chapter}:{verse.verse}
+                    </span> - {verse.text}
+                </p>
+            </div>
+        )
+    }
 
     return (
         <>
@@ -34,15 +71,24 @@ const ResultAll = ({currQuery}) => {
             resultLoading ? (
                 <ResultLoading />
             ) : (
-                <div className="query-result-container">
+                <div className="query-result-container" ref={containerRef}>
                     <div className="result-title-container">
                         <h3>Showing {queryResult.length} results</h3>
                     </div>
-                    {queryResult.map((results, idx) => (
-                        <div className="result-container" key={idx}>
-                            <p>{results.book} {results.chapter}:{results.verse} - {results.text}</p>
-                        </div>
-                    ))}
+                    {
+                        queryResult.length > 0 ? (
+                            <List
+                            itemCount={queryResult.length}
+                            itemSize={50}
+                            width="100%"
+                            height={containerHeight}
+                            >
+                                {Verse}
+                            </List>
+                        ) : (
+                            <p>No results found</p>
+                        )
+                    }
                 </div>
             )
         }
@@ -51,5 +97,3 @@ const ResultAll = ({currQuery}) => {
 }
 
 export default ResultAll
-
-// TODO: optimize search performace by properly handling api calls so that it won't freeze the browser page

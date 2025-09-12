@@ -44,6 +44,10 @@
     min-height: 0;
 }
 
+.book-selector-container .book-container {
+    transform: translateY(30%);
+}
+
 .reader-container {
     grid-area: reader;
     width: 100%;
