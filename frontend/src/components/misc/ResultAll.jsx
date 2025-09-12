@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { FixedSizeList as List } from "react-window";
+import { VariableSizeList as List } from "react-window";
 import { ResultLoading } from "../read-page/Loading";
 
 const ResultAll = ({currQuery}) => {
@@ -8,6 +8,14 @@ const ResultAll = ({currQuery}) => {
     const [resultLoading, setResultLoading] = useState(false);
     const containerRef = useRef(null)
     const [containerHeight, setContainerHeight] = useState(0);
+
+    // TODO: make this more dynamic
+    const getItemSize = (index) => {
+        const verse = queryResult[index];
+        const baseHeight = 40; // minimum row height
+        const extraPerChar = 0.07; // tweak until it feels right
+        return baseHeight + verse.text.length * extraPerChar;
+    };
 
     useEffect(() => {
         const updateContainerHeight = () => {
@@ -57,7 +65,7 @@ const ResultAll = ({currQuery}) => {
         return (
             <div style={style} className="result-container">
                 <p>
-                    <span>
+                    <span style={{fontWeight: 'bold'}}>
                         {verse.book} {verse.chapter}:{verse.verse}
                     </span> - {verse.text}
                 </p>
@@ -79,7 +87,7 @@ const ResultAll = ({currQuery}) => {
                         queryResult.length > 0 ? (
                             <List
                             itemCount={queryResult.length}
-                            itemSize={50}
+                            itemSize={getItemSize}
                             width="100%"
                             height={containerHeight}
                             >

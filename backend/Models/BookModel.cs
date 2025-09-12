@@ -8,7 +8,7 @@
 
     public class Books
     {
-        public string Name { get; set; } = "";
+        public string Book { get; set; } = "";
         public List<Chapters> Chapters { get; set; } = new();
     }
 

@@ -17,14 +17,14 @@ namespace backend.Controllers
         [HttpGet("booklist")]
         public IActionResult GetBookList()
         {
-            var result = _bibleContainer.Typed.Books.Select(b => b.Name).ToList();
+            var result = _bibleContainer.Typed.Books.Select(b => b.Book).ToList();
             return Ok(result);
         }
 
         [HttpGet("{bookName}")]
         public IActionResult GetBookContent(string bookName)
         {
-            var result = _bibleContainer.Typed.Books.FirstOrDefault(b => b.Name.Equals(bookName, StringComparison.OrdinalIgnoreCase));
+            var result = _bibleContainer.Typed.Books.FirstOrDefault(b => b.Book.Equals(bookName, StringComparison.OrdinalIgnoreCase));
             return Ok(result);
         }
 

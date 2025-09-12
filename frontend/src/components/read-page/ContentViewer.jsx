@@ -2,7 +2,7 @@ const ContentViewer = ({contents}) => {
     return (
         <div className="bible-container">
             <div className="title-container">
-                <h2>Book of {contents.name}</h2>
+                <h2>Book of {contents.book}</h2>
             </div>
 
             <div className="text-container">

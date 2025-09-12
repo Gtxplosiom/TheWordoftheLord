@@ -23,17 +23,17 @@ builder.Services.AddSingleton(sp =>
 {
     var bibleJsonContainer = new BibleContainer();
 
-    var json = System.IO.File.ReadAllText("Data/Bible/DRC.json");
+    var json = System.IO.File.ReadAllText("Data/Bible/NABRE.json");
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
     var typedBible = JsonSerializer.Deserialize<Bible>(json, options) ?? new Bible();
     var dynamicBible = JObject.Parse(json);
 
     var flatBible = typedBible.Books
-        .SelectMany(b => b.Chapters, (b, c) => new { b.Name, c })
+        .SelectMany(b => b.Chapters, (b, c) => new { b.Book, c })
         .SelectMany(bc => bc.c.Verses, (bc, v) => new VerseInfo
         {
-            Book = bc.Name,
+            Book = bc.Book,
             Chapter = bc.c.Chapter,
             Verse = v.Verse,
             Text = v.Text
