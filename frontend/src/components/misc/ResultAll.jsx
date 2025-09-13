@@ -14,7 +14,7 @@ const ResultAll = ({currQuery}) => {
         const verse = queryResult[index];
         const baseHeight = 40; // minimum row height
         const extraPerChar = 0.07; // tweak until it feels right
-        return baseHeight + verse.text.length * extraPerChar;
+        return baseHeight + verse.verseText.length * extraPerChar;
     };
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const ResultAll = ({currQuery}) => {
             setResultLoading(true);
 
             try {
-                const res = await axios.get(`https://localhost:7048/api/Bible/query/${currQuery}`);
+                const res = await axios.get(`https://localhost:7048/api/BibleDb/query/whole/${currQuery}`);
                 setQueryResult(res.data);
             } catch (err) {
                 console.error(err);
@@ -66,8 +66,8 @@ const ResultAll = ({currQuery}) => {
             <div style={style} className="result-container">
                 <p>
                     <span style={{fontWeight: 'bold'}}>
-                        {verse.book} {verse.chapter}:{verse.verse}
-                    </span> - {verse.text}
+                        {verse.bookName} {verse.chapterNum}:{verse.verseNum}
+                    </span> - {verse.verseText}
                 </p>
             </div>
         )

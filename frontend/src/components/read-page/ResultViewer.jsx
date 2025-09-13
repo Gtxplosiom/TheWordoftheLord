@@ -6,7 +6,7 @@ const ResultViewer = ({result}) => {
             </div>
             {result.map((results, idx) => (
                 <div className="result-container" key={idx}>
-                    <p><span style={{fontWeight: 'bold'}}>{results.chapter}:{results.verse}</span> - {results.text}</p>
+                    <p><span style={{fontWeight: 'bold'}}>{results.chapterNum}:{results.verseNum}</span> - {results.verseText}</p>
                 </div>
             ))}
         </div>

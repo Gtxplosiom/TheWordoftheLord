@@ -1,6 +1,6 @@
 using backend.Models;
-using System.Text.Json;
-using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,30 +18,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// singletons
-builder.Services.AddSingleton(sp =>
-{
-    var bibleJsonContainer = new BibleContainer();
+builder.Services.AddDbContext<BibleDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    var json = System.IO.File.ReadAllText("Data/Bible/NABRE.json");
-    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-    var typedBible = JsonSerializer.Deserialize<Bible>(json, options) ?? new Bible();
-    var dynamicBible = JObject.Parse(json);
-
-    var flatBible = typedBible.Books
-        .SelectMany(b => b.Chapters, (b, c) => new { b.Book, c })
-        .SelectMany(bc => bc.c.Verses, (bc, v) => new VerseInfo
-        {
-            Book = bc.Book,
-            Chapter = bc.c.Chapter,
-            Verse = v.Verse,
-            Text = v.Text
-        })
-        .ToList();
-
-    return new BibleContainer { Typed = typedBible, Flat = flatBible, Dynamic = dynamicBible };
-});
+// insert singlestons here
 
 var app = builder.Build();
 

@@ -113,3 +113,7 @@
     color: white;
     margin: 1px;
 }
+
+.verse-text {
+    display: flex;
+}

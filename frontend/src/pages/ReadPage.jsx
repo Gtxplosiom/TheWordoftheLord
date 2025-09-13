@@ -17,7 +17,7 @@ const ReadPage = () => {
     const [searchMode, setSearchMode] = useState("this")
 
     useEffect(() => {
-        axios.get("https://localhost:7048/api/Bible/booklist")
+        axios.get("https://localhost:7048/api/BibleDb/booklist")
         .then(res => setBooks(res.data))
         .catch(err => console.error(err));
     }, []);

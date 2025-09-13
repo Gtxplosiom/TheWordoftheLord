@@ -19,7 +19,7 @@ const Reader = ({bookName, currQuery}) => {
             setContentLoading(true);
 
             try {
-                const res = await axios.get(`https://localhost:7048/api/Bible/${bookName}`);
+                const res = await axios.get(`https://localhost:7048/api/BibleDb/content/${bookName}`);
                 setContent(res.data);
             } catch (err) {
                 console.error(err);
@@ -41,7 +41,7 @@ const Reader = ({bookName, currQuery}) => {
             setResultLoading(true);
 
             try {
-                const res = await axios.get(`https://localhost:7048/api/Bible/query/${bookName}/${currQuery}`);
+                const res = await axios.get(`https://localhost:7048/api/BibleDb/query/single/${bookName}/${currQuery}`);
                 setQueryResult(res.data);
             } catch (err) {
                 console.error(err);
