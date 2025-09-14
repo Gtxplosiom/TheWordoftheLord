@@ -1,15 +1,25 @@
 import { useContext, useState } from "react";
 import { QueryContext } from "../../contexts/QueryContext";
 import { SearchContext } from "../../contexts/SearchContext";
+import { ShowVerseContext } from "../../contexts/ShowVerseContext";
 
 const SearchBar = () => {
     const {setQueryString} = useContext(QueryContext);
     const {setSearchMode} = useContext(SearchContext);
     const [button1State, setButton1State] = useState(true);
     const [button2State, setButton2State] = useState(false);
+    const {setCurrVerse} = useContext(ShowVerseContext);
 
     const SearchQuery = (e) => {
-        setQueryString(e.target.value);
+        const value = e.target.value;
+
+        setQueryString(value);
+
+        // clear currVerse when search bar is empty
+        if (value === "")
+        {
+            setCurrVerse(null);
+        }
     }
 
     const Activate = (button, e) => {
