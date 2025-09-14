@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { BookContext } from '../../contexts/BookContext';
 
 const BookSelector = ({bookList}) => {
+    // no need to reset the scrollPos here as it automatically resets now because the element is renewed
     const {currBook, setCurrBook} = useContext(BookContext);
 
     const CycleBooks = (value) => {
@@ -19,7 +20,16 @@ const BookSelector = ({bookList}) => {
     const thirdLower = currBook + 3;
 
     return (
-        <div className="book-selector-container">
+        <div 
+            className="book-selector-container"
+            onWheel={(e) => {
+                if (e.deltaY < 0)
+                {
+                    CycleBooks(-1);
+                } else {
+                    CycleBooks(1);
+                }
+            }}>
             <div className="book-container">
                 <div id="first-upper" className="visible-book" onClick={() => CycleBooks(-3)}><span style={{opacity: 0.2}}>{firstUpper >= 0 ? bookList[firstUpper] : ''}</span></div>
                 <div id="second-upper" className="visible-book" onClick={() => CycleBooks(-2)}><span style={{opacity: 0.5}}>{secondUpper >= 0 ? bookList[secondUpper] : ''}</span></div>

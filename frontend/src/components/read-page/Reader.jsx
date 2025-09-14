@@ -1,6 +1,7 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, useContext, useRef } from "react";
 import axios from "axios";
 import { ContentLoading, ResultLoading } from "./Loading";
+import { ScrollPositionContext } from "../../contexts/ScrollPositionContext";
 
 const ContentViewer = lazy(() => import('./ContentViewer'));
 const ResultViewer = lazy(() => import('./ResultViewer'));
@@ -10,6 +11,8 @@ const Reader = ({bookName, currQuery}) => {
     const [queryResult, setQueryResult] = useState([]);
     const [contentLoading, setContentLoading] = useState(false);
     const [resultLoading, setResultLoading] = useState(false);
+    const {scrollPos, setScrollPos} = useContext(ScrollPositionContext);
+    const readerContainerRef = useRef(null);
 
     console.log(bookName);
 
@@ -53,9 +56,24 @@ const Reader = ({bookName, currQuery}) => {
         fetchQuery();
     }, [currQuery, bookName]);
 
+    useEffect(() => {
+        if (readerContainerRef.current) {
+            readerContainerRef.current.scrollTop = Number(scrollPos);
+            console.log("applied scroll pos:", scrollPos);
+        }
+    }, [content]);
+
+    const StoreScrollPos = (pos) => {
+        setScrollPos(pos);
+        console.log(scrollPos);
+    };
     
     return (
-        <div className="reader-container">
+        <div 
+            className="reader-container"
+            ref={readerContainerRef}
+            onScroll={(e) => StoreScrollPos(e.currentTarget.scrollTop)}
+            >
             {currQuery !== "" ? (
                 resultLoading ? (
                     <ResultLoading />
@@ -69,7 +87,7 @@ const Reader = ({bookName, currQuery}) => {
                     <ContentLoading />
                 ) : (
                     <Suspense fallback={<ContentLoading />}>
-                        <ContentViewer contents={content}/>
+                        <ContentViewer book={bookName} contents={content}/>
                     </Suspense>
                 )
             )

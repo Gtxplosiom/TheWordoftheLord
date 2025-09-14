@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const SearchContext = createContext("this");
+export const SearchContext = createContext("single");

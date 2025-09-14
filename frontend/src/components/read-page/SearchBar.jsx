@@ -16,17 +16,26 @@ const SearchBar = () => {
         if (button === "button1") {
             setButton1State(true);
             setButton2State(false);
-            setSearchMode("this");
+            setSearchMode("single");
         } else if (button === "button2") {
             setButton2State(true);
             setButton1State(false);
-            setSearchMode("all");
+            setSearchMode("whole");
         }
     }
 
     return (
         <div className="search-bar-container">
-            <input placeholder="Search here..." onChange={SearchQuery}></input>
+            <input 
+                placeholder="Search here..."
+                onChange={SearchQuery}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter")
+                    {
+                        SearchQuery(e);
+                    }
+                }}
+                />
             <button className={`search-button ${button1State ? "active" : ""}`} onClick={() => Activate("button1")}>Search this book</button>
             <button className={`search-button ${button2State ? "active" : ""}`} onClick={() => Activate("button2")}>Search whole bible</button>
         </div>

@@ -84,6 +84,24 @@
     overflow: auto;
 }
 
+.reader-container .bible-container .title-container {
+    position: sticky;
+    background-color: white;
+    height: 35px;
+    z-index: 999;
+}
+
+.reader-container .bible-container .chapter-container {
+    position: sticky;
+    background-color: white;
+    top: 35px;
+    height: 35px;
+}
+
+p {
+  scroll-margin-top: 70px;
+}
+
 .query-result-container .result-title-container {
     position: sticky;
     top: 0;
@@ -96,6 +114,10 @@
     border-width: 1px;
     border-radius: 5px;
     margin: 2px;
+}
+
+.query-result-container .result-container:hover {
+    cursor: pointer;
 }
 
 .search-button {
@@ -116,4 +138,8 @@
 
 .verse-text {
     display: flex;
+}
+
+.verse-container {
+    scroll-margin-top: 70px;
 }

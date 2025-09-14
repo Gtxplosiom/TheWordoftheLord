@@ -1,22 +1,30 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { VariableSizeList as List } from "react-window";
 import { ResultLoading } from "../read-page/Loading";
+import { BookContext } from "../../contexts/BookContext";
+import { ShowVerseContext } from "../../contexts/ShowVerseContext";
+import { QueryContext } from "../../contexts/QueryContext";
 
-const ResultAll = ({currQuery}) => {
+const ResultAll = ({bookList, currQuery}) => {
     const [queryResult, setQueryResult] = useState([]);
     const [resultLoading, setResultLoading] = useState(false);
     const containerRef = useRef(null)
     const [containerHeight, setContainerHeight] = useState(0);
 
+    const {setCurrBook} = useContext(BookContext);
+    const {setCurrVerse} = useContext(ShowVerseContext);
+    const {setQueryString} = useContext(QueryContext);
+
     // TODO: make this more dynamic
     const getItemSize = (index) => {
         const verse = queryResult[index];
-        const baseHeight = 40; // minimum row height
-        const extraPerChar = 0.07; // tweak until it feels right
+        const baseHeight = 40;
+        const extraPerChar = 0.07;
         return baseHeight + verse.verseText.length * extraPerChar;
     };
 
+    // auto adjust the height of the List from react-window when window resize since for it to work, a height int is needed 
     useEffect(() => {
         const updateContainerHeight = () => {
             if (containerRef.current) {
@@ -60,10 +68,19 @@ const ResultAll = ({currQuery}) => {
         fetchQuery();
     }, [currQuery]);
 
+    const ShowVerse = (bookName, chapterNum, verseNum) => {
+        const bookIndex = bookList.indexOf(bookName);
+        const verseKey = `${chapterNum}:${verseNum}`;
+        setCurrBook(bookIndex);
+        setCurrVerse(verseKey);
+        setQueryString("");
+    };
+
+    // renderer for the List in react window
     const Verse = ({index, style}) => {
         const verse = queryResult[index];
         return (
-            <div style={style} className="result-container">
+            <div style={style} className="result-container" onClick={() => ShowVerse(verse.bookName, verse.chapterNum, verse.verseNum)}>
                 <p>
                     <span style={{fontWeight: 'bold'}}>
                         {verse.bookName} {verse.chapterNum}:{verse.verseNum}
