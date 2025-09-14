@@ -5,6 +5,7 @@ import HomePage from '../../pages/HomePage';
 import AboutPage from '../../pages/AboutPage';
 import { BookContext } from '../../contexts/BookContext';
 import { ScrollPositionContext } from '../../contexts/ScrollPositionContext';
+import '../../assets/Content.css';
 
 const Content = () => {
     const {currTab} = useContext(PageContext);
@@ -15,9 +16,21 @@ const Content = () => {
         <div className='content-container'>
             <BookContext.Provider value={{currBook, setCurrBook}}>
                 <ScrollPositionContext.Provider value={{scrollPos, setScrollPos}}>
-                    {currTab === 0 && <ReadPage />}
-                    {currTab === 1 && <HomePage />}
-                    {currTab === 2 && <AboutPage />}
+                    {currTab === 0 && 
+                        <div className='read-page'>
+                            <ReadPage />
+                        </div>
+                    }
+                    {currTab === 1 &&
+                        <div className='home-page'>
+                            <HomePage />
+                        </div>
+                    }
+                    {currTab === 2 &&
+                        <div className='about-page'>
+                            <AboutPage />
+                        </div>
+                    }
                 </ScrollPositionContext.Provider>
             </BookContext.Provider>
         </div>

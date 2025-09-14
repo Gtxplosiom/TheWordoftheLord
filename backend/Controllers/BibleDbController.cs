@@ -85,5 +85,24 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("query/verse/{bookName}/{chapterNum}/{verseNum}")]
+        public IActionResult GetVerse(string bookName, int chapterNum, int verseNum)
+        {
+            var result = _context.VerseTexts
+                .Where(vt => EF.Functions.Like(vt.Verse.Chapter.Book.Name, bookName) &&
+                            vt.Verse.Chapter.ChapterNumber == chapterNum &&
+                            vt.Verse.VerseNumber == verseNum)
+                .Select(vt => new
+                {
+                    BookName = vt.Verse.Chapter.Book.Name,
+                    ChapterNum = vt.Verse.Chapter.ChapterNumber,
+                    VerseNum = vt.Verse.VerseNumber,
+                    VerseText = vt.Text
+                })
+                .FirstOrDefault();
+
+            return Ok(result);
+        }
     }
 }

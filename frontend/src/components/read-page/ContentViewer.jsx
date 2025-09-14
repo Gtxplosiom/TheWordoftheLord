@@ -8,6 +8,7 @@ const ContentViewer = ({book, contents}) => {
     const {currVerse, setCurrVerse} = useContext(ShowVerseContext);
 
     // TODO: prevent scrolling animation lag
+    // TODO: fix some target elements not in the expected position on scroll end (just below chapter title)
     // run whenever there is a new currVerse (chapterNum:verseNum) value
     useEffect(() => {
         if (currVerse !== null && verseRefs.current[currVerse]) {

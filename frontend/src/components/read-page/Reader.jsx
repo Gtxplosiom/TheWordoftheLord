@@ -56,14 +56,19 @@ const Reader = ({bookName, currQuery}) => {
         fetchQuery();
     }, [currQuery, bookName]);
 
+    // scroll position restoration
+    // whenever content changes and currQuery changes
     useEffect(() => {
-        if (readerContainerRef.current) {
+        if (readerContainerRef.current && scrollPos !== null) {
             readerContainerRef.current.scrollTop = Number(scrollPos);
-            console.log("applied scroll pos:", scrollPos);
+            console.log("restoring scroll position:", scrollPos);
         }
-    }, [content]);
+    }, [content, currQuery]);
 
     const StoreScrollPos = (pos) => {
+        // only store when not searching to not store scrollTop values from the resultview shen rendered
+        if (currQuery !== "") return;
+
         setScrollPos(pos);
         console.log(scrollPos);
     };
