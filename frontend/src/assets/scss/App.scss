@@ -1,0 +1,22 @@
+.app-container {
+    display: grid;
+    grid-template-rows: 7% 86% 7%;
+    grid-template-areas: 
+    'header'
+    'content'
+    'footer';
+    width: 100%;
+    height: 100%;
+
+    .header-container {
+        grid-area: header;
+    }
+
+    .content-container {
+        grid-area: content;
+    }
+
+    .footer-container {
+        grid-area: footer;
+    }
+}

@@ -1,0 +1,29 @@
+@mixin occupy-space {
+    width: 100%;
+    height: 100%;
+}
+
+@mixin center-children {
+    justify-content: center;
+    align-items: center;
+}
+
+.home-page-container {
+    @include occupy-space;
+    @include center-children;
+    display: flex;
+
+    .favorite-verse-container {
+        @include center-children;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .favorite-verse-text {
+            .text {
+                font-size: larger;
+            }
+        }
+    }
+}

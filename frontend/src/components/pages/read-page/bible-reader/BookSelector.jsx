@@ -1,14 +1,17 @@
 import { useContext } from "react";
-import { BookContext } from '../../contexts/BookContext';
+import { BookContext } from '../../../../contexts/BookContext';
+import { ScrollPositionContext } from "../../../../contexts/ScrollPositionContext";
 
 const BookSelector = ({bookList}) => {
-    // no need to reset the scrollPos here as it automatically resets now because the element is renewed
     const {currBook, setCurrBook} = useContext(BookContext);
+    const {setScrollPos} = useContext(ScrollPositionContext);
 
     const CycleBooks = (value) => {
         var newPage = value + currBook;
 
         if (newPage >= 0 && newPage < bookList.length) setCurrBook(newPage);
+
+        setScrollPos(0);
     }
 
     const firstUpper = currBook - 3;

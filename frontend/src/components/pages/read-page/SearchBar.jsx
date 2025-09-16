@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { QueryContext } from "../../contexts/QueryContext";
-import { SearchContext } from "../../contexts/SearchContext";
-import { ShowVerseContext } from "../../contexts/ShowVerseContext";
+import { QueryContext } from "../../../contexts/QueryContext";
+import { SearchContext } from "../../../contexts/SearchContext";
+import { ShowVerseContext } from "../../../contexts/ShowVerseContext";
 
 const SearchBar = () => {
     const {setQueryString} = useContext(QueryContext);

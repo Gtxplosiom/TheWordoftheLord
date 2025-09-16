@@ -1,0 +1,16 @@
+@mixin occupy-space {
+    width: 100%;
+    height: 100%;
+}
+
+@mixin center-children {
+    justify-content: center;
+    align-items: center;
+}
+
+.about-page-container {
+    @include occupy-space;
+    @include center-children;
+    display: flex;
+    text-align: center;
+}

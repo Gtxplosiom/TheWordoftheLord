@@ -33,12 +33,12 @@ const FavoriteVerse = () => {
         contentLoading !== true ? (
             <div className="favorite-verse-container">
                 <div className="favorite-verse-text">
-                    <p>
+                    <p className="text">
                         "{verse.verseText}"
                     </p>
                 </div>
                 <div className="favorite-verse-id">
-                    <p>- {verse.bookName} {verse.chapterNum}:{verse.verseNum}</p>
+                    <p className="id">- {verse.bookName} {verse.chapterNum}:{verse.verseNum}</p>
                 </div>
             </div>
         ) : (

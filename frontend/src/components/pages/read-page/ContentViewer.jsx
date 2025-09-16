@@ -1,11 +1,31 @@
 import { useContext, useEffect, useRef } from "react";
-import { ShowVerseContext } from "../../contexts/ShowVerseContext";
+import { ShowVerseContext } from "../../../contexts/ShowVerseContext";
+import { ScrollPositionContext } from "../../../contexts/ScrollPositionContext";
 
-const ContentViewer = ({book, contents}) => {
+const ContentViewer = ({book, contents, query}) => {
     // store refs for each verse in the current book
     const verseRefs = useRef({});
+    const contentViewerRef = useRef(null);
 
     const {currVerse, setCurrVerse} = useContext(ShowVerseContext);
+    const {scrollPos, setScrollPos} = useContext(ScrollPositionContext);
+
+    // scroll position restoration
+    // whenever content changes and currQuery changes
+    useEffect(() => {
+        if (contentViewerRef.current && scrollPos !== null) {
+            contentViewerRef.current.scrollTop = Number(scrollPos);
+            console.log("restoring scroll position:", scrollPos);
+        }
+    }, [contents, query]);
+
+    const StoreScrollPos = (pos) => {
+        // only store when not searching to not store scrollTop values from the resultview shen rendered
+        if (query !== "") return;
+
+        setScrollPos(pos);
+        console.log(scrollPos);
+    };
 
     // TODO: prevent scrolling animation lag
     // TODO: fix some target elements not in the expected position on scroll end (just below chapter title)
@@ -13,11 +33,11 @@ const ContentViewer = ({book, contents}) => {
     useEffect(() => {
         if (currVerse !== null && verseRefs.current[currVerse]) {
             const element = verseRefs.current[currVerse];
-            const container = element.closest(".reader-container");
+            const container = element.closest(".content-viewer-container");
 
             if (!container) return;
 
-            const offset = -70;
+            const offset = -85;
             const elementRect = element.getBoundingClientRect();
             const containerRect = container.getBoundingClientRect();
 
@@ -72,17 +92,19 @@ const ContentViewer = ({book, contents}) => {
     }, [currVerse]);
 
     return (
-        <div className="bible-container" >
-            <div className="title-container">
-                <h2>Book of {book}</h2>
+        <div 
+            className="content-viewer-container"
+            ref={contentViewerRef}
+            onScroll={(e) => StoreScrollPos(e.currentTarget.scrollTop)}>
+            <div className="book-title-container">
+                <h2 className="book-title">Book of {book}</h2>
             </div>
-
             <div 
-                className="text-container">
+                className="book-text-container">
                 {contents.chapters?.map((chapter, idx) => (
                     <div key={idx}>
                         <div className="chapter-container">
-                            <h3>Chapter {chapter.chapterNumber}</h3>
+                            <h3 className="book-chapter">Chapter {chapter.chapterNumber}</h3>
                         </div>
                         <div>
                             {chapter.verses.map((verse, vIdx) => {

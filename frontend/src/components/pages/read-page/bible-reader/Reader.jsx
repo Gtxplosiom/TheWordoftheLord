@@ -1,18 +1,16 @@
 import { useState, useEffect, lazy, Suspense, useContext, useRef } from "react";
 import axios from "axios";
-import { ContentLoading, ResultLoading } from "./Loading";
-import { ScrollPositionContext } from "../../contexts/ScrollPositionContext";
+import { ContentLoading, ResultLoading } from "../Loading";
+import { ScrollPositionContext } from "../../../../contexts/ScrollPositionContext";
 
-const ContentViewer = lazy(() => import('./ContentViewer'));
-const ResultViewer = lazy(() => import('./ResultViewer'));
+const ContentViewer = lazy(() => import('../ContentViewer'));
+const ResultViewer = lazy(() => import('../ResultViewer'));
 
 const Reader = ({bookName, currQuery}) => {
     const [content, setContent] = useState([]);
     const [queryResult, setQueryResult] = useState([]);
     const [contentLoading, setContentLoading] = useState(false);
     const [resultLoading, setResultLoading] = useState(false);
-    const {scrollPos, setScrollPos} = useContext(ScrollPositionContext);
-    const readerContainerRef = useRef(null);
 
     console.log(bookName);
 
@@ -55,30 +53,9 @@ const Reader = ({bookName, currQuery}) => {
 
         fetchQuery();
     }, [currQuery, bookName]);
-
-    // scroll position restoration
-    // whenever content changes and currQuery changes
-    useEffect(() => {
-        if (readerContainerRef.current && scrollPos !== null) {
-            readerContainerRef.current.scrollTop = Number(scrollPos);
-            console.log("restoring scroll position:", scrollPos);
-        }
-    }, [content, currQuery]);
-
-    const StoreScrollPos = (pos) => {
-        // only store when not searching to not store scrollTop values from the resultview shen rendered
-        if (currQuery !== "") return;
-
-        setScrollPos(pos);
-        console.log(scrollPos);
-    };
     
     return (
-        <div 
-            className="reader-container"
-            ref={readerContainerRef}
-            onScroll={(e) => StoreScrollPos(e.currentTarget.scrollTop)}
-            >
+        <div className="reader-container">
             {currQuery !== "" ? (
                 resultLoading ? (
                     <ResultLoading />
@@ -92,7 +69,7 @@ const Reader = ({bookName, currQuery}) => {
                     <ContentLoading />
                 ) : (
                     <Suspense fallback={<ContentLoading />}>
-                        <ContentViewer book={bookName} contents={content}/>
+                        <ContentViewer book={bookName} contents={content} query={currQuery}/>
                     </Suspense>
                 )
             )

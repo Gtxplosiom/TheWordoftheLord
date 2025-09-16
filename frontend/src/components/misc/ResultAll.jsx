@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { VariableSizeList as List } from "react-window";
-import { ResultLoading } from "../read-page/Loading";
+import { ResultLoading } from "../pages/read-page/Loading";
 import { BookContext } from "../../contexts/BookContext";
 import { ShowVerseContext } from "../../contexts/ShowVerseContext";
 import { QueryContext } from "../../contexts/QueryContext";
@@ -76,6 +76,23 @@ const ResultAll = ({bookList, currQuery}) => {
         setQueryString("");
     };
 
+    const highlightText = (text, query) => {
+        if (!query) return text;
+
+        const regex = new RegExp(`(${query})`, "gi"); // case-insensitive
+        const parts = text.split(regex);
+
+        return parts.map((part, idx) =>
+            regex.test(part) ? 
+                <span 
+                    key={idx}
+                    style={{fontWeight: 'bold', fontStyle: 'italic'}}
+                    >
+                    {part}
+                </span> : part
+        );
+    };
+
     // renderer for the List in react window
     const Verse = ({index, style}) => {
         const verse = queryResult[index];
@@ -84,7 +101,8 @@ const ResultAll = ({bookList, currQuery}) => {
                 <p>
                     <span style={{fontWeight: 'bold'}}>
                         {verse.bookName} {verse.chapterNum}:{verse.verseNum}
-                    </span> - {verse.verseText}
+                    </span> - 
+                    <span> {highlightText(verse.verseText, currQuery)}</span>
                 </p>
             </div>
         )
@@ -96,9 +114,9 @@ const ResultAll = ({bookList, currQuery}) => {
             resultLoading ? (
                 <ResultLoading />
             ) : (
-                <div className="query-result-container" ref={containerRef}>
+                <div className="result-all-container" ref={containerRef}>
                     <div className="result-title-container">
-                        <h3>Showing {queryResult.length} results</h3>
+                        <h3 className="result-title">{queryResult.length > 0 ? `Showing ${queryResult.length} ${queryResult.length > 1 ? 'results' : 'result'}` : 'Not found' }</h3>
                     </div>
                     {
                         queryResult.length > 0 ? (

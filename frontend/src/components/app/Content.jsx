@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 import { PageContext } from '../../contexts/PageContext';
-import ReadPage from '../../pages/ReadPage';
-import HomePage from '../../pages/HomePage';
-import AboutPage from '../../pages/AboutPage';
+import ReadPage from '../pages/ReadPage';
+import HomePage from '../pages/HomePage';
+import AboutPage from '../pages/AboutPage';
 import { BookContext } from '../../contexts/BookContext';
 import { ScrollPositionContext } from '../../contexts/ScrollPositionContext';
-import '../../assets/Content.css';
+import '../../assets/scss/Content.scss';
 
 const Content = () => {
     const {currTab} = useContext(PageContext);

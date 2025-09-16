@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { PageContext } from '../../contexts/PageContext';
-import '../../assets/Header.css'
+import '../../assets/scss/Header.scss'
 
 const Header = () => {
     const tabs = ['Read', 'Home', 'About'];
@@ -27,16 +27,16 @@ const Header = () => {
 
     return (
         <div className='header-container'>
-            <div className='tab-container'>
-                <table className='tab-table'>
-                    <tbody>
-                        <tr>
-                            <td id='left' className='tab-link' onClick={() => CycleTabs('left')}>{leftIndex != null ? tabs[leftIndex] : ''}</td>
-                            <td id='mid' className='tab-link'>{tabs[midIndex]}</td>
-                            <td id='right' className='tab-link' onClick={() => CycleTabs('right')}>{rightIndex != null ? tabs[rightIndex] : ''}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div className='tab-scroller'>
+                <div id='left-tab'>
+                    <span className='tab-link' onClick={() => CycleTabs('left')}>{leftIndex != null ? tabs[leftIndex] : ''}</span>
+                </div>
+                <div id='middle-tab'>
+                    <span className='tab-link'>{tabs[midIndex]}</span>
+                </div>
+                <div id='right-tab'>
+                    <span className='tab-link' onClick={() => CycleTabs('right')}>{rightIndex != null ? tabs[rightIndex] : ''}</span>
+                </div>
             </div> 
         </div>
     )

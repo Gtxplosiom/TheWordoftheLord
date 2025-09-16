@@ -1,0 +1,35 @@
+$standard-page-width: 100vw;
+$standard-page-height: 100vh;
+$standard-font-style: normal;
+$standard-font-family: 'Inter', sans-serif;
+$standard-font-size: 17px;
+
+$light-theme-background: white;
+$light-theme-font-color: black;
+$dark-theme-background: black;
+$dark-theme-font-color: white;
+
+$theme: 'light';
+
+* {
+    font-family: $standard-font-family;
+    font-style: $standard-font-style;
+    font-size: $standard-font-size;
+    font-optical-sizing: auto;
+
+    @if $theme == 'light' {
+        background-color: $light-theme-background;
+        color: $light-theme-font-color;
+    } @else if $theme == 'dark' {
+        background-color: $dark-theme-background;
+        color: $dark-theme-font-color;
+    }
+}
+
+html, body, #root {
+    width: $standard-page-width;
+    height: $standard-page-height;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+}

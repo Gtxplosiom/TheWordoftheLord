@@ -1,15 +1,13 @@
 import { useState, useEffect, useContext } from 'react'
-import { BookContext } from '../contexts/BookContext';
-import { QueryContext } from '../contexts/QueryContext';
-import { SearchContext } from '../contexts/SearchContext';
-import { ShowVerseContext } from '../contexts/ShowVerseContext';
+import { BookContext } from '../../contexts/BookContext';
+import { QueryContext } from '../../contexts/QueryContext';
+import { SearchContext } from '../../contexts/SearchContext';
+import { ShowVerseContext } from '../../contexts/ShowVerseContext';
 import axios from "axios";
-import SearchBar from '../components/read-page/SearchBar';
-import BookSelector from '../components/read-page/BookSelector'
-import Reader from '../components/read-page/Reader'
-import ToolSelector from '../components/read-page/ToolSelector'
-import ResultAll from '../components/misc/ResultAll';
-import '../assets/ReadPage.css'
+import SearchBar from './read-page/SearchBar';
+import BibleReader from './read-page/BibleReader';
+import ResultAll from '../misc/ResultAll';
+import '../../assets/scss/ReadPage.scss'
 
 const ReadPage = () => {
     // stores book list
@@ -37,21 +35,17 @@ const ReadPage = () => {
             <QueryContext.Provider value={{queryString, setQueryString}}>
                 {console.log(queryString)}
                 <div className='read-page-container'>
-                    <div id='row1'>
+                    <div className='search-bar'>
                         <SearchBar />
                     </div>
-                    <div id='row2' className={searchMode === "whole" && queryString !== "" ? "one-col" : "three-col"}>
+                    <div className='content-area'>
                         <ShowVerseContext.Provider value={{currVerse, setCurrVerse}}>
-                            {searchMode === "whole" && queryString !== "" ? (
-                            <ResultAll bookList={books} currQuery={queryString}/>
-                        ) : (
-                            <>
-                                <BookSelector bookList={books}/>
-                                <Reader bookName={books[currBook]} currQuery={queryString}/>
-                                <ToolSelector />
-                            </>
-                        )
-                        }
+                            <div className={`result-all ${searchMode === 'whole' && queryString !== "" ? "visible" : "hidden"}`}>
+                                <ResultAll bookList={books} currQuery={queryString}/>
+                            </div>
+                            <div className={`bible-reader ${searchMode === 'single' || queryString === "" ? "visible" : "hidden"}`}>
+                                <BibleReader list={books} name={books[currBook]} query={queryString}/>
+                            </div>
                         </ShowVerseContext.Provider>
                     </div>
                 </div>

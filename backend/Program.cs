@@ -1,3 +1,4 @@
+using backend.Controllers;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
@@ -18,10 +19,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpClient<TimeController>();
+
 builder.Services.AddDbContext<BibleDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// insert singlestons here
+// singletons
+builder.Services.AddSingleton<TimeModel>();
 
 var app = builder.Build();
 
