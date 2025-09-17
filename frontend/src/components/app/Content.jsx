@@ -7,7 +7,7 @@ import { BookContext } from '../../contexts/BookContext';
 import { ScrollPositionContext } from '../../contexts/ScrollPositionContext';
 import '../../assets/scss/Content.scss';
 
-const Content = () => {
+export default function Content() {
     const {currTab} = useContext(PageContext);
     const [currBook, setCurrBook] = useState(0);
     const [scrollPos, setScrollPos] = useState(0);
@@ -36,5 +36,3 @@ const Content = () => {
         </div>
     )
 }
-
-export default Content;

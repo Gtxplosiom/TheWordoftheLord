@@ -5,7 +5,7 @@ import Footer from "./components/app/Footer";
 import { PageContext } from "./contexts/PageContext";
 import './assets/scss/App.scss';
 
-const App = () => {
+export default function App() {
     const [currTab, setCurrtab] = useState(1);
 
     return (
@@ -18,5 +18,3 @@ const App = () => {
         </PageContext.Provider>
     )
 }
-
-export default App

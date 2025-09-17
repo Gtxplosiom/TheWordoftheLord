@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const TimeRenderer = () => {
+export default function TimeRenderer() {
     const[currTime, setCurrTime] = useState(null);
     const[userTimeZone, setUserTimeZone] = useState(null);
 
@@ -54,5 +54,3 @@ const TimeRenderer = () => {
         </div>
     )
 }
-
-export default TimeRenderer

@@ -9,7 +9,7 @@ import BibleReader from './read-page/BibleReader';
 import ResultAll from '../misc/ResultAll';
 import '../../assets/scss/ReadPage.scss'
 
-const ReadPage = () => {
+export default function ReadPage() {
     // stores book list
     const [books, setBooks] = useState([]);
 
@@ -53,5 +53,3 @@ const ReadPage = () => {
         </SearchContext.Provider>
     )
 }
-
-export default ReadPage

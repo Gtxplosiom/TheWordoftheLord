@@ -21,6 +21,8 @@
         @include center-children;
         grid-area: row1;
         display: flex;
+        z-index: 14;
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 
         .search-bar-container {
             @include occupy-space;
@@ -61,6 +63,8 @@
                 @include center-children;
                 grid-area: book-selector;
                 display: flex;
+                z-index: 11;
+                box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
 
                 .book-container {
                     @include occupy-space;
@@ -130,10 +134,10 @@
 
                     .book-title-container {
                         width: 100%;
-                        height: 50px;
+                        height: 60px;
                         position: sticky;
                         top: 0;
-                        z-index: 999;
+                        z-index: 13;
 
                         .book-title {
                             font-size: 25px;
@@ -147,7 +151,9 @@
                             width: 100%;
                             height: 35px;
                             position: sticky;
-                            top: 50px;
+                            top: 60px;
+                            z-index: 12;
+                            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 
                             .book-chapter {
                                 font-size: 20px;
@@ -163,6 +169,44 @@
                 display: flex;
                 flex-direction: column;
                 grid-area: tool-selector;
+                z-index: 11;
+                box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
+
+                & > * {
+                    width: 35px;
+                    height: 35px;
+                    margin: 20px;
+                    position: relative;
+                    display: inline-block;
+                    transition: transform 0.05s ease;
+
+                    & > * {
+                        width: 35px;
+                        height: 35px;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: scale(1.2);
+                    }
+
+                    &.clicked {
+                        transform: scale(1.0);
+                    }
+
+                    .tool-tip {
+                        position: absolute;
+                        bottom: 125%;
+                        border-radius: 5px;
+                        transform: translateY(50%);
+                        pointer-events: none;
+                        background: none;
+
+                        > * {
+                            background-color: rgba(255, 255, 255, 0.8);
+                        }
+                    }
+                }
             }
         }
 

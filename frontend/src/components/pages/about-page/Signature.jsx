@@ -1,4 +1,4 @@
-const Signature = () => {
+export default function Signature() {
     return (
         <div className="signature-container">
             <p>Made with ❤️</p>
@@ -8,5 +8,3 @@ const Signature = () => {
         </div>
     )
 }
-
-export default Signature

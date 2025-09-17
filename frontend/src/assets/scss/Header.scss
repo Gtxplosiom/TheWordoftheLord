@@ -22,24 +22,27 @@ $separator-thickness: 1px;
     @include center-children;
     display: flex;
     padding: 3px;
+    z-index: 15;
+    // box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+
+    /* line below the tabs */
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 350px;
+        transform: translateX(-50%);
+        height: $separator-thickness + 1px;     /* need usa pa na pixel */
+        background-color: $light-theme-separator-color;
+    }
 
     /* tab scroller styles */
     .tab-scroller {
         @include center-children;
         width: $tab-scroller-width;
         display: flex;
-        position: relative;
-
-        /* line below the tabs */
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: $separator-thickness + 1px;     /* need usa pa na pixel */
-            background-color: $light-theme-separator-color;
-        }
 
         div#middle-tab {
             border-style: $separator-style;
@@ -58,6 +61,7 @@ $separator-thickness: 1px;
             .tab-link {
                 font-weight: bold;
                 font-size: 27px;
+                transition: font-size 0.1s ease;
 
                 &:hover {
                     cursor: pointer;

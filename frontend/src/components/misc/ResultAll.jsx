@@ -6,7 +6,7 @@ import { BookContext } from "../../contexts/BookContext";
 import { ShowVerseContext } from "../../contexts/ShowVerseContext";
 import { QueryContext } from "../../contexts/QueryContext";
 
-const ResultAll = ({bookList, currQuery}) => {
+export default function ResultAll({bookList, currQuery}) {
     const [queryResult, setQueryResult] = useState([]);
     const [resultLoading, setResultLoading] = useState(false);
     const containerRef = useRef(null)
@@ -138,5 +138,3 @@ const ResultAll = ({bookList, currQuery}) => {
         </>
     )
 }
-
-export default ResultAll

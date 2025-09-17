@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { PageContext } from '../../contexts/PageContext';
 import '../../assets/scss/Header.scss'
 
-const Header = () => {
+export default function Header() {
     const tabs = ['Read', 'Home', 'About'];
 
     const {currTab, setCurrtab} = useContext(PageContext);
@@ -27,7 +27,15 @@ const Header = () => {
 
     return (
         <div className='header-container'>
-            <div className='tab-scroller'>
+            <div
+                className='tab-scroller'
+                onWheel={(e) => {
+                    if (e.deltaX < 0 && currTab > 0) {
+                        setCurrtab(currTab - 1);
+                    } else if (e.deltaX > 0 && currTab < tabs.length - 1) {
+                        setCurrtab(currTab + 1);
+                    }
+                }}>
                 <div id='left-tab'>
                     <span className='tab-link' onClick={() => CycleTabs('left')}>{leftIndex != null ? tabs[leftIndex] : ''}</span>
                 </div>
@@ -37,9 +45,7 @@ const Header = () => {
                 <div id='right-tab'>
                     <span className='tab-link' onClick={() => CycleTabs('right')}>{rightIndex != null ? tabs[rightIndex] : ''}</span>
                 </div>
-            </div> 
+            </div>
         </div>
     )
 }
-
-export default Header

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { ContentLoading } from "../read-page/Loading";
 
-const FavoriteVerse = () => {
+export default function FavoriteVerse() {
     const [contentLoading, setContentLoading] = useState(false);
     const [verse, setVerse] = useState('');
 
@@ -46,5 +46,3 @@ const FavoriteVerse = () => {
         )
     )
 }
-
-export default FavoriteVerse

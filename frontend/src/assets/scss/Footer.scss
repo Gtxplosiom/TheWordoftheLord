@@ -13,7 +13,8 @@
     display: grid;
     grid-template-columns: 80% 20%;
     grid-template-areas: 'main time';
-
+    z-index: 15;
+    // box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
     .main-footer {
         @include occupy-space;
         @include center-children;

@@ -1,4 +1,4 @@
-const VOTD = () => {
+export default function VOTD() {
     return (
         <div className="votd-container">
             <h2>Verse of the Day</h2>
@@ -11,5 +11,3 @@ const VOTD = () => {
         </div>
     )
 }
-
-export default VOTD

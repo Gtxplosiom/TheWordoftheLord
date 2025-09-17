@@ -1,7 +1,7 @@
 import TimeRenderer from './footer/TimeRenderer';
 import '../../assets/scss/Footer.scss'
 
-const Footer = () => {
+export default function Footer() {
     return (
         <div className='footer-container'>
             <div className='main-footer'>
@@ -11,5 +11,3 @@ const Footer = () => {
         </div>
     )
 }
-
-export default Footer
