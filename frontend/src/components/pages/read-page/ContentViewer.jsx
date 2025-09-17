@@ -37,7 +37,7 @@ const ContentViewer = ({book, contents, query}) => {
 
             if (!container) return;
 
-            const offset = -85;
+            const offset = -95;
             const elementRect = element.getBoundingClientRect();
             const containerRect = container.getBoundingClientRect();
 
